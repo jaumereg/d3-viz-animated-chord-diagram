@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- <script src="http://vizjs.org/viz.v1.1.0.min.js"></script> -->
+    <script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+    <script>
+    var data = [
+        [ 'Jack', 'Lucas', 30],
+        [ 'Lucas', 'Jack', 12],
+        [ 'Nick', 'Jaume', 11],
+        [ 'Jaume', 'Nick', 2],
+        [ 'Nick', 'Andrew', 8],
+        [ 'Andrew', 'Nick', 4],
+        [ 'Nick', 'Tiffany', 12],
+        [ 'Stephen', 'Kevin', 77],
+        [ 'Deise', 'Kevin', 97],
+        [ 'Kevin', 'Stephen', 12],
+        [ 'Kevin', 'Deise', 11],
+        [ 'Tiffany', 'Nick', 1],
+        [ 'Nick', 'Kevin', 2],
+        [ 'Kevin', 'Nick', 7],
+        [ 'Nick', 'Ziggy', 4],
+        [ 'Jack', 'Tiffany', 14],
+        [ 'Tiffany', 'Jack', 11],
+        [ 'Jack', 'Andrew', 16],
+        [ 'Andrew', 'Jack', 9],
+        [ 'Jack', 'Figs', 77],
+        [ 'Figs', 'Jack', 33],
+        [ 'Jack', 'Jaume', 22],
+        [ 'Jaume', 'Jack', 1],
+        [ 'Jack', 'Nick', 22],
+        [ 'Nick', 'Jack', 12],
+        [ 'Ferg', 'Jack', 6],
+        [ 'Luis', 'Ziggy', 7],
+        [ 'Ziggy', 'Luis', 8],
+        [ 'Lucas', 'Tiffany', 3],
+        [ 'Lucas', 'Andrew', 22],
+        [ 'Lucas', 'Figs', 65],
+        [ 'Lucas', 'Jaume', 11],
+        [ 'Lucas', 'Nick', 24],
+        [ 'Nick', 'Lucas', 54],
+        [ 'Lucas', 'Kevin', 31],
+        [ 'Kevin', 'Lucas', 8],
+        [ 'Peter B', 'Shane', 54],
+        [ 'Shane', 'Peter B', 3],
+        [ 'Tiffany', 'Andrew', 2],
+        [ 'Peter F', 'Ziggy', 1],
+        [ 'Ziggy', 'Peter F', 65],
+        [ 'Andrew', 'Tiffany', 24],
+        [ 'Tiffany', 'Figs', 15],
+        [ 'Figs', 'Tiffany', 17],
+        [ 'Tiffany', 'Jaume', 11],
+        [ 'Jaume', 'Tiffany', 10],
+        [ 'Tiffany', 'Paul', 12],
+        [ 'Paul', 'Jack', 33],
+        [ 'Andrew', 'Figs', 56],
+        [ 'Andrew', 'Tiffany', 13],
+        [ 'Paul', 'Tiffany', 18],
+        [ 'Paul', 'Ziggy', 14],
+        [ 'Ziggy', 'Paul', 4],
+        [ 'Ziggy', 'Ferg', 3],
+        [ 'Ferg', 'Ziggy', 30],
+        [ 'Shane', 'Peter F', 12],
+        [ 'Peter F', 'Shane', 11],
+        [ 'Shane', 'Luis', 9],
+        [ 'Luis', 'Shane', 11],
+        [ 'Luis', 'Peter F', 5],
+        [ 'Peter B', 'Stephen', 6],
+        [ 'Deise', 'Stephen', 12],
+        [ 'Stephen', 'Deise', 44],
+        [ 'Peter B', 'Andrew', 12],
+        [ 'Peter B', 'Tiffany', 66],
+        [ 'Peter B', 'Jack', 22],
+        [ 'Ziggy', 'Peter B', 12],
+        [ 'Deise', 'Jack', 35],
+        [ 'Jack', 'Deise', 24],
+        [ 'Nick', 'Peter B', 1],
+        [ 'Brian', 'John', 14],
+        [ 'Kevin', 'John', 12],
+        [ 'Kevin', 'Brian', 18],
+        [ 'Mark', 'John', 11],
+        [ 'Mark', 'Brian', 8],
+        [ 'Mark', 'Kevin', 2],
+        [ 'Mick', 'John', 9],
+        [ 'Mick', 'Brian', 33],
+        [ 'Mick', 'Kevin', 12],
+        [ 'Mick', 'Mark', 1],
+        [ 'Kevin', 'Paul', 2],
+        [ 'Brian', 'Figs', 2],
+        [ 'Kevin', 'Mick', 5],
+        [ 'Nick', 'Mick', 6],
+        [ 'Brian', 'Nick', 11],
+        [ 'Brian', 'Lucas', 17]
+    ]
+
+    // var colors = {
+    //     "Jack": "#da4480",
+    //     "Lucas": "#5ab449",
+    //     "Tiffany": "#7f5acd",
+    //     "Andrew": "#aab740",
+    //     "Figs": "#ce58c0",
+    //     "Jaume": "#50a26e",
+    //     "Paul": "#d1434b",
+    //     "Shane": "#45c0bc",
+    //     "Peter F": "#ce5929",
+    //     "Luis": "#4e7bda",
+    //     "Stephen": "#d49d3c",
+    //     "Peter B": "#6660a3",
+    //     "Ziggy": "#7b853c",
+    //     "Deise": "#b58dde",
+    //     "Ferg": "#97622e",
+    //     "Nick": "#609dd6",
+    //     "John": "#e29074",
+    //     "Brian": "#9c4b88",
+    //     "Kevin": "#ab505f",
+    //     "Mark": "#dc85b6",
+    //     "Mick": "#ab97a0"
+    // };
+
+    var colors = {
+        "Jack": "#F34336",
+        "Lucas": "#E81E63",
+        "Tiffany": "#9C27B0",
+        "Andrew": "#673AB7",
+        "Figs": "#3F51B5",
+        "Jaume": "#2196F2",
+        "Paul": "#03A9F3",
+        "Shane": "#00BCD3",
+        "Peter F": "#009688",
+        "Luis": "#4CAF50",
+        "Stephen": "#8BC24A",
+        "Peter B": "#CCDB39",
+        "Ziggy": "#FEEA3B",
+        "Deise": "#FEC007",
+        "Ferg": "#FE9800",
+        "Nick": "#FE5722",
+        "John": "#795548",
+        "Brian": "#9E9E9E",
+        "Kevin": "#607D8B",
+        "Mark": "#374046",
+        "Mick": "#dc85b6"
+    };
+
+    var people = [ 'Jack', 'Lucas', 'Tiffany', 'Andrew', 'Figs', 'Jaume', 'Paul', 'Shane', 'Peter F', 'Luis', 'Stephen', 'Peter B', 'Ziggy', 'Deise', 'Ferg', 'Nick', 'John', 'Brian', 'Kevin', 'Mark', 'Mick' ];
+
+    var sortOrder = people.sort();
+
+    // var sortOrder = [
+    //     "Arsenal", "Aston Villa", "Bournemouth", "Chelsea", "Crystal Palace", "Everton", "Leicester City", "Liverpool", "Manchester City", "Manchester Utd", "Newcastle Utd", "Norwich City", "Southampton", "Stoke City", "Sunderland", "Swansea City", "Tottenham", "Watford", "West Bromwich", "West Ham Utd"
+    // ];
+
+    function sort(a, b) { return d3.ascending(sortOrder.indexOf(a), sortOrder.indexOf(b)); }
+
+    var ch = viz.ch().data(data)
+        .padding(.01)
+        .sort(sort)
+        .innerRadius(430)
+        .outerRadius(450)
+        .duration(1000)
+        .chordOpacity(0.3)
+        .labelPadding(.03)
+        .fill(function(d) { return colors[d]; });
+
+    var width = 1200,
+        height = 1100;
+
+    var svg = d3.select("body").append("svg").attr("height", height).attr("width", width);
+
+    svg.append("g").attr("transform", "translate(600,550)").call(ch);
+
+    svg.selectAll('.label')
+        .style('display', (d) => {
+            // console.log(d)
+            return 'block'
+        })
+
+    </script>
