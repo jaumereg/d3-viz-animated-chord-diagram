@@ -636,13 +636,27 @@
                 var r = (1 + ch.labelPadding()) * ch.outerRadius();
                 var lbl = ch.label();
 
+                // labels.filter(function(d) { return d.type == "g" })
+                //     .attr("x", function(d) { return r * Math.cos(angle(d)); })
+                //     .attr("y", function(d) { return r * Math.sin(angle(d)); })
+                //     .text((d) => {
+                //         return `${d.source} (${d.value})`;
+                //     })
+                //     .style("text-anchor", function(d) { var a = angle(d); return a < π2 || a > τ - π2 ? "start" : "end"; })
+                //     .each(function(d) { this._current = d; });
+
                 labels.filter(function(d) { return d.type == "g" })
-                    .attr("x", function(d) { return r * Math.cos(angle(d)); })
-                    .attr("y", function(d) { return r * Math.sin(angle(d)); })
+                    .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
+                    .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+                    .attr("transform", function(d) {
+                        console.log(d)
+                      return "rotate(" + (d.angle * 180 / Math.PI) + ")"
+                          + "translate(" + (200 + 26) + ")"
+                          + (d.angle > Math.PI ? "rotate(180)" : "");
+                    })
                     .text((d) => {
                         return `${d.source} (${d.value})`;
                     })
-                    .style("text-anchor", function(d) { var a = angle(d); return a < π2 || a > τ - π2 ? "start" : "end"; })
                     .each(function(d) { this._current = d; });
 
                 grps.append("path")
@@ -796,24 +810,41 @@
             }
 
             var gp = g.selectAll(".groups").data(f ? newgroups : ch.groups());
-            console.log(gp)
             var r = (1 + ch.labelPadding()) * ch.outerRadius();
             var lbl = ch.label();
 
             gp.select("path").transition().duration(duration).attrTween("d", arcTween);
 
+            // gp.select(".label").filter(function(d) { return d.type == "g" })
+            //     .transition().duration(duration)
+            //     .attrTween("x", labelTweenx)
+            //     .attrTween("y", labelTweeny)
+            //     .text((d) => {
+            //         if (d.value == 0 && f) {
+            //             return '';
+            //         } else {
+            //             return `${d.source} (${d.value})`;
+            //         }
+            //     })
+            //     .style("text-anchor", function(d) { var a = angle(d); return a < π2 || a > τ - π2 ? "start" : "end"; });
+
             gp.select(".label").filter(function(d) { return d.type == "g" })
-                .transition().duration(duration)
-                .attrTween("x", labelTweenx)
-                .attrTween("y", labelTweeny)
-                .text((d) => {
-                    if (d.value == 0 && f) {
-                        return '';
-                    } else {
-                        return `${d.source} (${d.value})`;
-                    }
-                })
-                .style("text-anchor", function(d) { var a = angle(d); return a < π2 || a > τ - π2 ? "start" : "end"; });
+                    .transition().duration(duration)
+                    .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
+                    .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : "start"; })
+                    .attr("transform", function(d) {
+                      return "rotate(" + (d.angle * 180 / Math.PI) + ")"
+                          + "translate(" + (200 + 26) + ")"
+                          + (d.angle > Math.PI ? "rotate(180)" : "");
+                    })
+                    .text((d) => {
+                        if (d.value == 0 && f) {
+                            return '';
+                        } else {
+                            return `${d.source} (${d.value})`;
+                        }
+                    })
+                    .each(function(d) { this._current = d; });
 
             var opacity = ch.chordOpacity();
 
