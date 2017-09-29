@@ -651,7 +651,7 @@
                     .attr("transform", function(d) {
                         console.log(d)
                       return "rotate(" + (d.angle * 180 / Math.PI) + ")"
-                          + "translate(" + (200 + 26) + ")"
+                          + "translate(" + (430 + 26) + ")"
                           + (d.angle > Math.PI ? "rotate(180)" : "");
                     })
                     .text((d) => {
@@ -834,7 +834,7 @@
                     .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : "start"; })
                     .attr("transform", function(d) {
                       return "rotate(" + (d.angle * 180 / Math.PI) + ")"
-                          + "translate(" + (200 + 26) + ")"
+                          + "translate(" + (430 + 26) + ")"
                           + (d.angle > Math.PI ? "rotate(180)" : "");
                     })
                     .text((d) => {
