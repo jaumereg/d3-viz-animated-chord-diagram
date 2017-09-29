@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <!-- <script src="http://vizjs.org/viz.v1.1.0.min.js"></script> -->
-    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="viz.js"></script>
 </head>
 <body>
+    <div class="title">
+        <h1>Chord Diagram</h1>
+        <h3>Messages sent through Slack</h3>
+    </div>
     <script>
     var data = [
         [ 'Jack', 'Lucas', 30],
@@ -14,9 +18,9 @@
         [ 'Nick', 'Jaume', 11],
         [ 'Jaume', 'Nick', 2],
         [ 'Nick', 'Andrew', 8],
-        [ 'Andrew', 'Nick', 4],
+        [ 'Andrew', 'Nick', 24],
         [ 'Nick', 'Tiffany', 12],
-        [ 'Stephen', 'Kevin', 77],
+        [ 'Stephen', 'Kevin', 17],
         [ 'Deise', 'Kevin', 97],
         [ 'Kevin', 'Stephen', 12],
         [ 'Kevin', 'Deise', 11],
@@ -50,7 +54,8 @@
         [ 'Tiffany', 'Andrew', 2],
         [ 'Peter F', 'Ziggy', 1],
         [ 'Ziggy', 'Peter F', 65],
-        [ 'Andrew', 'Tiffany', 24],
+        [ 'Stephen', 'Mick', 15],
+        [ 'Andrew', 'Tiffany', 4],
         [ 'Tiffany', 'Figs', 15],
         [ 'Figs', 'Tiffany', 17],
         [ 'Tiffany', 'Jaume', 11],
@@ -97,6 +102,7 @@
         [ 'Brian', 'Lucas', 17]
     ]
 
+    // OLD COLORS
     // var colors = {
     //     "Jack": "#da4480",
     //     "Lucas": "#5ab449",
@@ -121,28 +127,54 @@
     //     "Mick": "#ab97a0"
     // };
 
+    // COLORS PALETTE
+    // var colors = {
+    //     "Jack": "#F34336",
+    //     "Lucas": "#E81E63",
+    //     "Tiffany": "#9C27B0",
+    //     "Andrew": "#673AB7",
+    //     "Figs": "#3F51B5",
+    //     "Jaume": "#2196F2",
+    //     "Paul": "#03A9F3",
+    //     "Shane": "#00BCD3",
+    //     "Peter F": "#009688",
+    //     "Luis": "#4CAF50",
+    //     "Stephen": "#8BC24A",
+    //     "Peter B": "#CCDB39",
+    //     "Ziggy": "#FEEA3B",
+    //     "Deise": "#FEC007",
+    //     "Ferg": "#FE9800",
+    //     "Nick": "#FE5722",
+    //     "John": "#795548",
+    //     "Brian": "#9E9E9E",
+    //     "Kevin": "#607D8B",
+    //     "Mark": "#374046",
+    //     "Mick": "#DC85B6"
+    // };
+
+    // SORTED COLORS
     var colors = {
-        "Jack": "#F34336",
-        "Lucas": "#E81E63",
-        "Tiffany": "#9C27B0",
-        "Andrew": "#673AB7",
+        "Jack": "#2196F2",
+        "Lucas": "#4CAF50",
+        "Tiffany": "#D7AFDA",
+        "Andrew": "#F34336",
         "Figs": "#3F51B5",
-        "Jaume": "#2196F2",
-        "Paul": "#03A9F3",
-        "Shane": "#00BCD3",
-        "Peter F": "#009688",
-        "Luis": "#4CAF50",
-        "Stephen": "#8BC24A",
-        "Peter B": "#CCDB39",
-        "Ziggy": "#FEEA3B",
-        "Deise": "#FEC007",
-        "Ferg": "#FE9800",
-        "Nick": "#FE5722",
-        "John": "#795548",
-        "Brian": "#9E9E9E",
-        "Kevin": "#607D8B",
-        "Mark": "#374046",
-        "Mick": "#dc85b6"
+        "Jaume": "#03A9F3",
+        "Paul": "#FE9800",
+        "Shane": "#C5C3C5",
+        "Peter F": "#B78E81",
+        "Luis": "#8BC24A",
+        "Stephen": "#F5C6F4",
+        "Peter B": "#FE5722",
+        "Ziggy": "#DC85B6",
+        "Deise": "#9C27B0",
+        "Ferg": "#673AB7",
+        "Nick": "#FEC007",
+        "John": "#00BCD3",
+        "Brian": "#E81E63",
+        "Kevin": "#009688",
+        "Mark": "#CCDB39",
+        "Mick": "#FEEA3B"
     };
 
     var people = [ 'Jack', 'Lucas', 'Tiffany', 'Andrew', 'Figs', 'Jaume', 'Paul', 'Shane', 'Peter F', 'Luis', 'Stephen', 'Peter B', 'Ziggy', 'Deise', 'Ferg', 'Nick', 'John', 'Brian', 'Kevin', 'Mark', 'Mick' ];

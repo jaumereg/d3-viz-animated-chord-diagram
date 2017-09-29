@@ -636,6 +636,8 @@
                 var r = (1 + ch.labelPadding()) * ch.outerRadius();
                 var lbl = ch.label();
 
+                // HORIZONTAL LABEL
+                // ---------------------------------------------------
                 // labels.filter(function(d) { return d.type == "g" })
                 //     .attr("x", function(d) { return r * Math.cos(angle(d)); })
                 //     .attr("y", function(d) { return r * Math.sin(angle(d)); })
@@ -645,6 +647,8 @@
                 //     .style("text-anchor", function(d) { var a = angle(d); return a < π2 || a > τ - π2 ? "start" : "end"; })
                 //     .each(function(d) { this._current = d; });
 
+                // ORIENTED LABEL
+                // ------------------------------------------------
                 labels.filter(function(d) { return d.type == "g" })
                     .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
                     .attr("text-anchor", function(d) {
@@ -658,10 +662,10 @@
                     .attr("transform", function(d) {
                         if ((d.angle > Math.PI/2 && d.angle < Math.PI) || (d.angle > (Math.PI + Math.PI/2) && d.angle < Math.PI * 2)) {
                             return "rotate(" + (d.angle * 180 / Math.PI) + ")"
-                          + "translate(" + (400 + 26) + ")" + (d.angle > Math.PI ? "rotate(0)" : "rotate(-180)");;
+                          + "translate(" + (400 + 27) + ")" + (d.angle > Math.PI ? "rotate(0)" : "rotate(-180)");;
                         } else {
                             return "rotate(" + (d.angle * 180 / Math.PI) + ")"
-                          + "translate(" + (400 + 26) + ")"
+                          + "translate(" + (400 + 27) + ")"
                           + (d.angle > Math.PI ? "rotate(180)" : "");
                         }
                     })
@@ -826,6 +830,8 @@
 
             gp.select("path").transition().duration(duration).attrTween("d", arcTween);
 
+            // HORIZONTAL LABEL
+            // ----------------------------------------------------------------
             // gp.select(".label").filter(function(d) { return d.type == "g" })
             //     .transition().duration(duration)
             //     .attrTween("x", labelTweenx)
@@ -839,6 +845,8 @@
             //     })
             //     .style("text-anchor", function(d) { var a = angle(d); return a < π2 || a > τ - π2 ? "start" : "end"; });
 
+            // ORIENTED LABEL
+            // -------------------------------------------------------------
             gp.select(".label").filter(function(d) { return d.type == "g" })
                     .transition().duration(duration)
                     .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
@@ -852,10 +860,10 @@
                     .attr("transform", function(d) {
                         if ((d.angle > Math.PI/2 && d.angle < Math.PI) || (d.angle > (Math.PI + Math.PI/2) && d.angle < Math.PI * 2)) {
                             return "rotate(" + (d.angle * 180 / Math.PI) + ")"
-                          + "translate(" + (400 + 26) + ")" + (d.angle > Math.PI ? "rotate(0)" : "rotate(-180)");;
+                          + "translate(" + (400 + 27) + ")" + (d.angle > Math.PI ? "rotate(0)" : "rotate(-180)");;
                         } else {
                             return "rotate(" + (d.angle * 180 / Math.PI) + ")"
-                          + "translate(" + (400 + 26) + ")"
+                          + "translate(" + (400 + 27) + ")"
                           + (d.angle > Math.PI ? "rotate(180)" : "");
                         }
                     })
@@ -869,6 +877,13 @@
                     .each(function(d) { this._current = d; });
 
             var opacity = ch.chordOpacity();
+
+            // OPACITY ANIMATION WHEN HOVER
+            // ----------------------------
+            g.selectAll('.label')
+                .attr('id', (d) => {
+                    return f > 0 ? 'hideshow' : 'show';
+                })
 
             g.select(".chords").selectAll(".chord")
                 .data(f ? newchords : ch.chords()).select("path")

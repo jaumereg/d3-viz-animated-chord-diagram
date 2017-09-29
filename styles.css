@@ -1,0 +1,95 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.title {
+	position: absolute;
+	margin-left: 25px;
+	letter-spacing: 1px;
+}
+
+h1, h3 {
+	font-weight: initial;
+}
+
+h1 {
+	font-size: 27px;
+	margin-bottom: 5px;
+}
+
+h3 {
+	font-size: 16px;
+	margin-top: 0;
+}
+
+svg {
+	margin: -50px -80px;
+}
+
+svg text {
+    fill: grey;
+    font-size: 11px;
+}
+
+svg .values text {
+    pointer-events: none;
+    stroke-width: 0.5px;
+}
+
+.groups:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.groups:hover #hideshow {
+	animation: shown 1s ease;
+}
+
+.groups:hover #show {
+	animation: shown 1s ease;
+}
+
+@keyframes show {
+  0% { opacity: 0; }
+  20% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes hide {
+  0% { opacity: 1; }
+  20% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes hideshow {
+  0% { opacity: 1; }
+  25% { opacity: 0; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes shown {
+  0% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.title {
+  animation: show 2s ease;
+}
+
+#hideshow {
+	animation: hideshow 1s ease;
+}
+
+#hideshow:hover {
+	animation: shown 1s ease;
+}
+
+#hide {
+	animation: hide 1s ease;
+	opacity: 0;
+}
+
+#show {
+	animation: show 1s ease;
+}
