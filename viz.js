@@ -652,21 +652,22 @@
                 labels.filter(function(d) { return d.type == "g" })
                     .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
                     .attr("text-anchor", function(d) {
-                        if ((d.angle > Math.PI/2 && d.angle < Math.PI) || (d.angle > (Math.PI + Math.PI/2) && d.angle < Math.PI * 2)) {
-                            return d.angle > Math.PI ? "start" : "end"; 
+                        if ((d.angle > Math.PI / 2 && d.angle < Math.PI) || (d.angle > (Math.PI + Math.PI / 2) && d.angle < Math.PI * 2)) {
+                            return d.angle > Math.PI ? "start" : "end";
                         } else {
-                            return d.angle > Math.PI ? "end" : "start"; 
+                            return d.angle > Math.PI ? "end" : "start";
                         }
-                        
+
                     })
+                    .attr("alignment-baseline", "middle")
                     .attr("transform", function(d) {
-                        if ((d.angle > Math.PI/2 && d.angle < Math.PI) || (d.angle > (Math.PI + Math.PI/2) && d.angle < Math.PI * 2)) {
-                            return "rotate(" + (d.angle * 180 / Math.PI) + ")"
-                          + "translate(" + (400 + 27) + ")" + (d.angle > Math.PI ? "rotate(0)" : "rotate(-180)");;
+                        if ((d.angle > Math.PI / 2 && d.angle < Math.PI) || (d.angle > (Math.PI + Math.PI / 2) && d.angle < Math.PI * 2)) {
+                            return "rotate(" + (d.angle * 180 / Math.PI) + ")" +
+                                "translate(" + (380 + 27) + ")" + (d.angle > Math.PI ? "rotate(0)" : "rotate(-180)");;
                         } else {
-                            return "rotate(" + (d.angle * 180 / Math.PI) + ")"
-                          + "translate(" + (400 + 27) + ")"
-                          + (d.angle > Math.PI ? "rotate(180)" : "");
+                            return "rotate(" + (d.angle * 180 / Math.PI) + ")" +
+                                "translate(" + (380 + 27) + ")" +
+                                (d.angle > Math.PI ? "rotate(180)" : "");
                         }
                     })
                     .text((d) => {
@@ -688,6 +689,7 @@
                     .append("path")
                     .each(function(d) { this._current = d; })
                     .attr("d", chord)
+                    // .style('fill', 'none')
                     .style("fill", function(d) { return fill(d.target) })
                     .style("opacity", ch.chordOpacity())
                     .style("stroke", function(d) { return fill(d.target) })
@@ -848,33 +850,40 @@
             // ORIENTED LABEL
             // -------------------------------------------------------------
             gp.select(".label").filter(function(d) { return d.type == "g" })
-                    .transition().duration(duration)
-                    .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
-                    .attr("text-anchor", function(d) {
-                        if ((d.angle > Math.PI/2 && d.angle < Math.PI) || (d.angle > (Math.PI + Math.PI/2) && d.angle < Math.PI * 2)) {
-                            return d.angle > Math.PI ? "start" : "end"; 
+                .transition().duration(duration)
+                .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
+                .attr("text-anchor", function(d) {
+                    if ((d.angle > Math.PI / 2 && d.angle < Math.PI) || (d.angle > (Math.PI + Math.PI / 2) && d.angle < Math.PI * 2)) {
+                        return d.angle > Math.PI ? "start" : "end";
+                    } else {
+                        return d.angle < Math.PI * 2 ? (d.angle > Math.PI ? "end" : "start") : (d.angle > Math.PI * 2.5 ? (d.angle < Math.PI * 3 ? "end" : "start") : "start");
+                    }
+                })
+                .attr("alignment-baseline", "middle")
+                .attr("transform", function(d) {
+                    if ((d.angle > Math.PI / 2 && d.angle < Math.PI) || (d.angle > (Math.PI + Math.PI / 2) && d.angle < Math.PI * 2)) {
+                        return "rotate(" + (d.angle * 180 / Math.PI) + ")" +
+                            "translate(" + (380 + 27) + ")" + (d.angle > Math.PI ? "rotate(0)" : "rotate(-180)");;
+                    } else {
+                        if (d.angle < Math.PI * 2) {
+                            return "rotate(" + (d.angle * 180 / Math.PI) + ")" +
+                                "translate(" + (380 + 27) + ")" +
+                                (d.angle > Math.PI ? "rotate(180)" : "");
                         } else {
-                            return d.angle > Math.PI ? "end" : "start"; 
+                            return "rotate(" + (d.angle * 180 / Math.PI) + ")" +
+                                "translate(" + (380 + 27) + ")" +
+                                (d.angle > Math.PI * 2.5 ? (d.angle < Math.PI * 3 ? "rotate(180)" : "rotate(0)") : "rotate(0)");
                         }
-                    })
-                    .attr("transform", function(d) {
-                        if ((d.angle > Math.PI/2 && d.angle < Math.PI) || (d.angle > (Math.PI + Math.PI/2) && d.angle < Math.PI * 2)) {
-                            return "rotate(" + (d.angle * 180 / Math.PI) + ")"
-                          + "translate(" + (400 + 27) + ")" + (d.angle > Math.PI ? "rotate(0)" : "rotate(-180)");;
-                        } else {
-                            return "rotate(" + (d.angle * 180 / Math.PI) + ")"
-                          + "translate(" + (400 + 27) + ")"
-                          + (d.angle > Math.PI ? "rotate(180)" : "");
-                        }
-                    })
-                    .text((d) => {
-                        if (d.value == 0 && f) {
-                            return '';
-                        } else {
-                            return `${d.source} (${d.value})`;
-                        }
-                    })
-                    .each(function(d) { this._current = d; });
+                    }
+                })
+                .text((d) => {
+                    if (d.value == 0 && f) {
+                        return '';
+                    } else {
+                        return `${d.source} (${d.value})`;
+                    }
+                })
+                .each(function(d) { this._current = d; });
 
             var opacity = ch.chordOpacity();
 

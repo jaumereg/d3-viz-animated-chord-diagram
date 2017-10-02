@@ -190,8 +190,8 @@
     var ch = viz.ch().data(data)
         .padding(.01)
         .sort(sort)
-        .innerRadius(400)
-        .outerRadius(420)
+        .innerRadius(380)
+        .outerRadius(400)
         .duration(1000)
         .chordOpacity(0.3)
         .labelPadding(.03)
@@ -203,11 +203,5 @@
     var svg = d3.select("body").append("svg").attr("height", height).attr("width", width);
 
     svg.append("g").attr("transform", "translate(600,550)").call(ch);
-
-    svg.selectAll('.label')
-        .style('display', (d) => {
-            // console.log(d)
-            return 'block'
-        })
 
     </script>
